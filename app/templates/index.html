@@ -84,7 +84,59 @@
 		</div>
 	</div>
 	<script>
-	  // your solution here
+   function setListener(elemID, gesture, activateFunction) {
+     var DOM = document.getElementById(elemID);
+     var mc = Hammer(DOM);
+     mc.get('pinch').set({ enable: true });
+     mc.get('rotate').set({ enable: true });
+     mc.on(gesture, activateFunction);
+   };
+    
+   // how to rotate: https://stackoverflow.com/questions/3020904/how-to-rotate-a-div-using-jquery
+   var rotation = 0;
+   setListener('rotate-box', 'rotate', function(){
+   rotation += 5;
+    $('#rotate-box').css('transform', 'rotate('+ rotation +'deg)');
+   });
+   
+   //set pinch
+   setListener('pinch-box', 'pinch', function(){
+    $('#pinch-box').css('transition', 'transform .2s'); // set animation
+    $('#pinch-box').css('transform', 'scale(0.5)');
+   });
+  
+   //set press
+   setListener('press-box', 'press', function(){
+   $('#press-box').css('background', 'black');
+   });
+   
+   //set press up
+   setListener('press-box', 'pressup', function(){
+   $('#press-box').css('background', '#7ce6df');
+   });
+    
+   //set pan
+   var length = 100;
+   setListener('pan-box', 'pan', function(){
+   length += 5;
+    $('#pan-box').css('width', length + 'px');
+   });
+   
+   //set tap
+   var zoomLv = 1
+   $('#tap-box').css('transition', 'transform .2s'); // set animation
+   setListener('tap-box', 'tap', function(){
+    zoomLv += 0.3;
+    $('#tap-box').css('transform', 'scale('+ zoomLv +')');
+   });
+    
+   //set swipe
+   //random color: https://www.itsupportguides.com/knowledge-base/tech-tips-tricks/how-to-set-a-random-colour-using-jquery-and-javascript/
+   setListener('swipe-box', 'swipe', function(){
+   var randomColor = 'rgb('+ (Math.floor(Math.random() * 256)) + ','+ (Math.floor(Math.random() * 256)) + ','+ (Math.floor(Math.random() * 256)) + ')';
+   $('#swipe-box').css('background', randomColor);
+   });
+    
   </script>
 </body>
 </html>
